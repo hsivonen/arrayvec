@@ -154,6 +154,7 @@ impl<T, const CAP: usize> ArrayVec<T, CAP> {
     /// array.pop();
     /// assert_eq!(array.remaining_capacity(), 1);
     /// ```
+    #[inline(always)]
     pub const fn remaining_capacity(&self) -> usize {
         self.capacity() - self.len()
     }
@@ -253,6 +254,7 @@ impl<T, const CAP: usize> ArrayVec<T, CAP> {
 
 
     /// Get pointer to where element at `index` would be
+    #[inline(always)]
     unsafe fn get_unchecked_ptr(&mut self, index: usize) -> *mut T {
         self.as_mut_ptr().add(index)
     }
@@ -537,6 +539,7 @@ impl<T, const CAP: usize> ArrayVec<T, CAP> {
     ///
     /// This method uses *debug assertions* to check that `length` is
     /// not greater than the capacity.
+    #[inline(always)]
     pub unsafe fn set_len(&mut self, length: usize) {
         // type invariant that capacity always fits in LenUint
         debug_assert!(length <= self.capacity());
@@ -561,6 +564,7 @@ impl<T, const CAP: usize> ArrayVec<T, CAP> {
     /// slice.
     ///
     /// [`remaining_capacity`]: #method.remaining_capacity
+    #[inline(always)]
     pub fn try_extend_from_slice(&mut self, other: &[T]) -> Result<(), CapacityError>
         where T: Copy,
     {
